@@ -1,0 +1,281 @@
+{
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get all users",
+        "parameters": [
+          {
+            "name": "vehicle_no",
+            "in": "query",
+            "required": false,
+            "description": "Vehicle Number",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number (optional)",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of users per page (optional)",
+            "schema": {
+              "type": "integer",
+              "example": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of users"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get a user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The user ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update a user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The user ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete a user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The user ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/user/filter": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user by NIC or vehicle number",
+        "parameters": [
+          {
+            "name": "nic",
+            "in": "query",
+            "required": false,
+            "description": "NIC",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "vehicle_no",
+            "in": "query",
+            "required": false,
+            "description": "Vehicle Number",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/validate-vehicle": {
+      "post": {
+        "tags": ["Vehicles"],
+        "summary": "Validate vehicle number",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleValidation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Vehicle number is valid"
+          },
+          "404": {
+            "description": "Vehicle number not valid"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "66deba2d218093caea6d6798"
+          },
+          "user_name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "nic": {
+            "type": "string",
+            "example": "987654321V"
+          },
+          "mobile": {
+            "type": "string",
+            "example": "0712345678"
+          },
+          "vehicle_no": {
+            "type": "string",
+            "example": "wpabc1234"
+          },
+          "vehicle_model": {
+            "type": "string",
+            "example": "Toyota Corolla"
+          },
+          "user_id": {
+            "type": "integer",
+            "example": 13
+          }
+        }
+      },
+      "UserInput": {
+        "type": "object",
+        "properties": {
+          "user_name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "nic": {
+            "type": "string",
+            "example": "987654321V"
+          },
+          "mobile": {
+            "type": "string",
+            "example": "0712345678"
+          },
+          "vehicle_no": {
+            "type": "string",
+            "example": "ABC-1235"
+          },
+          "vehicle_model": {
+            "type": "string",
+            "example": "Toyota Corolla"
+          }
+        }
+      },
+      "VehicleValidation": {
+        "type": "object",
+        "properties": {
+          "vehicle_no": {
+            "type": "string",
+            "example": "ABC-1234"
+          }
+        }
+      }
+    }
+  }
+}

@@ -46,6 +46,16 @@ This API provides a platform to manage user registrations, including NIC, mobile
 
    The server will be running on `http://localhost:5000`.
 
+### Running Swagger UI:
+
+Once the server is running, you can access the Swagger UI documentation by navigating to:
+
+```
+http://localhost:5000/api-docs
+```
+
+Swagger UI allows you to interact with the API and test all the available endpoints directly from your browser.
+
 ### API Endpoints:
 
 | Method | Endpoint                   | Description                           |
